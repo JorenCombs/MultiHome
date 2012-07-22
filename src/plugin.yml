@@ -1,9 +1,19 @@
 name: MultiHome
-version: 0.11.2
+version: 0.15
 main: net.madmanmarkau.MultiHome.MultiHome
 authors:
  - MadManMarkAu
  - Sleaker
+ - HereInPlainSight
+website: http://dev.bukkit.org/server-mods/multihome/
+softdepend:
+ - Register
+ - Vault
+ - Permissions
+ - PermissionsEx
+ - PermissionsBukkit
+ - PermissionsBukkit1-1
+ - EssentialsHome
 license: WTFPL
 description: >
              Multiple home locations.
@@ -34,10 +44,10 @@ commands:
     usage: /<command> [<user>]
   invitehome:
     description: Invites another player to your home. Make your home location public.
-    usage: /<command> {<user>|*} [<time>] [<home>]
+    usage: /<command> {<user>|*} [<home>]
   minvitehome:
     description: Invites another player to your home. Make your home location public.
-    usage: /<command> {<user>|*} [<time>] [<home>]
+    usage: /<command> {<user>|*} [<home>]
   invitehometimed:
     description: Invites another player to your home for a time. Make your home location public.
     usage: /<command> {<user>|*} <time> [<home>]

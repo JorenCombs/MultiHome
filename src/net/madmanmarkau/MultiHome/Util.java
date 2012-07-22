@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.madmanmarkau.MultiHome.Data.HomeEntry;
+import net.madmanmarkau.MultiHome.Data.InviteEntry;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -90,21 +93,11 @@ public class Util {
 	}
 
 	/**
-	 * Does a bug-fixing teleport (wither indirect or direct) to a location. Fixes a bug teleporting between worlds.
-	 * @param player Player to teleport.
-	 * @param location Location to teleport player to.
+	 * Faith-based teleporting.  Second chunk send removed based on feedback that issue has
+	 * been fixed in 1.2.
 	 */
 	public static void teleportPlayer(Player player, Location location, JavaPlugin plugin) {
-		int backupTask;
-
 		player.teleport(location);
-
-		// Schedule a task to re-send the chunk
-		backupTask = plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new ChunkResendTask(location), 1); // 1/20 second delay
-		
-		if (backupTask == -1) {
-			Messaging.logSevere("Failed to create chunk resend schedule!", plugin);
-		}
 	}
 	
 	public static Date dateInFuture(int seconds) {
@@ -113,9 +106,9 @@ public class Util {
 		return new Date(now.getTime() + seconds * 1000);
 	}
 	
-	public static String compileHomeList(ArrayList<HomeLocation> homes) {
+	public static String compileHomeList(ArrayList<HomeEntry> homes) {
 		String userResponse = "";
-		for (HomeLocation thisLocation : homes) {
+		for (HomeEntry thisLocation : homes) {
 			if (thisLocation.getHomeName().length() == 0) {
 				userResponse = userResponse + ", [Default]";
 			} else {
@@ -128,9 +121,9 @@ public class Util {
 		return "";
 	}
 
-	public static String compileInviteListForMe(String requestingPlayer, ArrayList<HomeInvite> invites) {
+	public static String compileInviteListForMe(String requestingPlayer, ArrayList<InviteEntry> invites) {
 		String userResponse = "";
-		for (HomeInvite thisInvite : invites) {
+		for (InviteEntry thisInvite : invites) {
 			if (thisInvite.getInviteSource().compareToIgnoreCase(requestingPlayer) != 0) {
 				if (thisInvite.getInviteHome().length() == 0) {
 					userResponse = userResponse + ", " + thisInvite.getInviteSource() + ":[Default]";
@@ -161,9 +154,9 @@ public class Util {
 		return "";
 	}
 
-	public static String compileInviteListForOthers(ArrayList<HomeInvite> invites) {
+	public static String compileInviteListForOthers(ArrayList<InviteEntry> invites) {
 		String userResponse = "";
-		for (HomeInvite thisInvite : invites) {
+		for (InviteEntry thisInvite : invites) {
 			if (thisInvite.getInviteHome().length() == 0) {
 				userResponse += ", " + thisInvite.getInviteTarget() + "->[Default]";
 				if (thisInvite.getInviteExpires() != null) {

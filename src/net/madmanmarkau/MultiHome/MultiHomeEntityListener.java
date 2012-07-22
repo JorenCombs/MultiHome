@@ -1,19 +1,22 @@
 package net.madmanmarkau.MultiHome;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityListener;
 
 /**
 * @author Sleaker
 */
-public class MultiHomeEntityListener extends EntityListener {
+public class MultiHomeEntityListener implements Listener {
 	MultiHome plugin;
 
 	MultiHomeEntityListener(MultiHome plugin) {
 		this.plugin = plugin;
 	}
 
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (event.isCancelled())
 			return;
@@ -22,8 +25,8 @@ public class MultiHomeEntityListener extends EntityListener {
 			return;
 		else {
 			Player player = (Player) event.getEntity();
-			if (plugin.warmups.getWarmup(player.getName().toLowerCase()) != null && Settings.getSettingDisrupt(player)) {
-				plugin.warmups.removeWarmup(player.getName().toLowerCase());
+			if (plugin.getWarmUpManager().getWarmup(player.getName().toLowerCase()) != null && Settings.getSettingDisrupt(player)) {
+				plugin.getWarmUpManager().removeWarmup(player.getName().toLowerCase());
 				Settings.sendMessageWarmupDisrupted(player);
 			}
 		}
