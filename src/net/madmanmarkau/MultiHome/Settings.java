@@ -66,6 +66,22 @@ public class Settings {
 	public static boolean isEconomyEnabled() {
 		return plugin.getConfig().getBoolean("MultiHome.enableEconomy", false);
 	}
+	
+
+	/**
+	 * JOREN
+	 *
+	 * Returns true if region is blocked
+	 */
+
+	public static boolean isRegionBlocked(String world, String region)
+	{
+		return plugin.getConfig().getBoolean("MultiHome.denyregions." + world + "." + region, false);
+	}
+
+	/*
+	 * /JOREN
+	 */
 
 	public static int getSetNamedHomeCost(Player player) {
 		return getSettingInt(player, "setNamedHomeCost", 0);

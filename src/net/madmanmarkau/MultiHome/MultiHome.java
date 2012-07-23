@@ -8,6 +8,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.palmergames.bukkit.towny.Towny;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 public class MultiHome extends JavaPlugin {
 	private HomeManager homes;
 	private InviteManager invites;
@@ -143,4 +146,33 @@ public class MultiHome extends JavaPlugin {
     public String getPluginDataPath() {
     	return this.pluginDataPath;
     }
+    
+    /**
+* JOREN
+*/
+    
+    public Towny getTowny() {
+     Plugin plugin = getServer().getPluginManager().getPlugin("Towny");
+    
+        // Towny may not be loaded
+     if (plugin == null || !(plugin instanceof Towny)) {
+            return null;
+        }
+     return (Towny) plugin;
+    }
+    
+    public WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+     
+        // WorldGuard may not be loaded
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+     
+        return (WorldGuardPlugin) plugin;
+    }
+    
+    /*
+* /JOREN
+*/
 }
