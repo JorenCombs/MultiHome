@@ -33,10 +33,24 @@ public class MultiHomeCommands {
 
 			int warmupTime = Settings.getSettingWarmup(player);
 			HomeEntry homeEntry = plugin.getHomeManager().getHome(player, "");
+			
+			/*
+			 * JOREN
+			 */
+			if (!HomePermissions.has(player, "multihome.ignore.regions"))
+				if (!plugin.getHomeManager().validHomeRegion(player, ""))
+					homeEntry = null;
+			if (!HomePermissions.has(player, "multihome.ignore.towny")) // Drop the else when ready to implement
+				if (!plugin.getHomeManager().validHomeTowny(player, ""))
+					homeEntry = null;
+			/*
+			 * /JOREN
+			 */
+			
 
 			if (homeEntry != null) {
 				if (warmupTime > 0 && !HomePermissions.has(player, "multihome.ignore.warmup")) {
-					// Warpup required.
+					// Warmup required.
 					WarmUpEntry warmup = new WarmUpEntry(player.getName(), Util.dateInFuture(warmupTime), homeEntry.getHomeLocation(plugin.getServer()), amount);
 					plugin.getWarmUpManager().addWarmup(warmup);
 					Settings.sendMessageWarmup(player, warmupTime);
@@ -90,6 +104,19 @@ public class MultiHomeCommands {
 			int warmupTime = Settings.getSettingWarmup(player);
 			HomeEntry homeEntry = plugin.getHomeManager().getHome(player, home);
 
+			/*
+			 * JOREN
+			 */
+			if (!HomePermissions.has(player, "multihome.ignore.regions"))
+				if (!plugin.getHomeManager().validHomeRegion(player, home))
+					homeEntry = null;
+			if (!HomePermissions.has(player, "multihome.ignore.towny")) // Drop the else when ready to implement
+				if (!plugin.getHomeManager().validHomeTowny(player, home))
+					homeEntry = null;
+			/*
+			 * /JOREN
+			 */
+			
 			if (homeEntry != null) {
 				if (warmupTime > 0 && !HomePermissions.has(player, "multihome.ignore.warmup")) {
 					// Warpup required.
@@ -148,6 +175,19 @@ public class MultiHomeCommands {
 			if (plugin.getHomeManager().getUserExists(owner)) {
 				HomeEntry homeEntry = plugin.getHomeManager().getHome(owner, home);
 
+				/*
+				 * JOREN
+				 */
+				if (!HomePermissions.has(player, "multihome.ignore.regions"))
+					if (!plugin.getHomeManager().validHomeRegion(player, home))
+						homeEntry = null;
+				if (!HomePermissions.has(player, "multihome.ignore.towny")) // Drop the else when ready to implement
+					if (!plugin.getHomeManager().validHomeTowny(player, home))
+						homeEntry = null;
+				/*
+				 * /JOREN
+				 */
+				
 				if (homeEntry != null) {
 					if (warmupTime > 0 && !HomePermissions.has(player, "multihome.ignore.warmup")) {
 						// Warpup required.
