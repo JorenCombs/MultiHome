@@ -98,6 +98,7 @@ public class Util {
 	 */
 	public static void teleportPlayer(Player player, Location location, JavaPlugin plugin) {
 		player.teleport(location);
+		plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new ChunkResendTask(location), 1); // 1/20 second delay
 	}
 	
 	public static Date dateInFuture(int seconds) {
