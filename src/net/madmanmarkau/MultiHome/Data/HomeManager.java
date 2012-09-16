@@ -23,7 +23,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.Towny;
 
@@ -217,8 +216,8 @@ public abstract class HomeManager {
 					Resident owner;
 					try{
 						owner = tb.getResident();
-					} catch (NotRegisteredException e)
-					{
+					} catch (Exception e)
+					{//Actually NotRegisteredException, but can't have the dependency or missing Towny jar will kill this plugin
 						owner = t.getMayor(); // If plot is not sold, treat the mayor as owner
 					}
 					Resident homer = towny.getTownyUniverse().getResident(player.getName());
@@ -228,8 +227,8 @@ public abstract class HomeManager {
 					return false;
 				}
 			}
-			catch (NotRegisteredException e)
-			{
+			catch (Exception e)
+			{//Actually NotRegisteredException, but can't have the dependency or missing Towny jar will kill this plugin
 				return true; // Assuming plot is not part of Towny
 			}
 		}
